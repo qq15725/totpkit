@@ -1,21 +1,21 @@
 {
-  "name": "starter-ts-cli",
+  "name": "ootp",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.0",
   "packageManager": "pnpm@7.9.0",
   "description": "Starter template for TypeScript command line interface library",
   "author": "wxm",
   "license": "MIT",
-  "homepage": "https://github.com/qq15725/starter-ts-cli",
+  "homepage": "https://github.com/qq15725/ootp",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qq15725/starter-ts-cli.git"
+    "url": "git+https://github.com/qq15725/ootp.git"
   },
   "engines": {
     "node": ">=14.18.1"
   },
   "bugs": {
-    "url": "https://github.com/qq15725/starter-ts-cli/issues"
+    "url": "https://github.com/qq15725/ootp/issues"
   },
   "keywords": [],
   "exports": {
@@ -28,7 +28,7 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "bin": {
-    "cli": "./bin/index.mjs"
+    "ootp": "./bin/index.mjs"
   },
   "files": [
     "bin",
