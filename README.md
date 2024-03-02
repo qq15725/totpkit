@@ -1,4 +1,4 @@
-<h1 align="center">totpkit</h1>
+<h1 align="center">TOTPKit</h1>
 
 <p align="center">
   <a href="https://unpkg.com/totpkit">
