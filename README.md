@@ -1,31 +1,31 @@
-<h1 align="center">ootp</h1>
+<h1 align="center">totpkit</h1>
 
 <p align="center">
-  <a href="https://unpkg.com/ootp">
-    <img src="https://img.shields.io/bundlephobia/minzip/ootp" alt="Minzip">
+  <a href="https://unpkg.com/totpkit">
+    <img src="https://img.shields.io/bundlephobia/minzip/totpkit" alt="Minzip">
   </a>
-  <a href="https://www.npmjs.com/package/ootp">
-    <img src="https://img.shields.io/npm/v/ootp.svg" alt="Version">
+  <a href="https://www.npmjs.com/package/totpkit">
+    <img src="https://img.shields.io/npm/v/totpkit.svg" alt="Version">
   </a>
-  <a href="https://www.npmjs.com/package/ootp">
-    <img src="https://img.shields.io/npm/dm/ootp" alt="Downloads">
+  <a href="https://www.npmjs.com/package/totpkit">
+    <img src="https://img.shields.io/npm/dm/totpkit" alt="Downloads">
   </a>
-  <a href="https://github.com/qq15725/ootp/issues">
-    <img src="https://img.shields.io/github/issues/qq15725/ootp" alt="Issues">
+  <a href="https://github.com/qq15725/totpkit/issues">
+    <img src="https://img.shields.io/github/issues/qq15725/totpkit" alt="Issues">
   </a>
-  <a href="https://github.com/qq15725/ootp/blob/main/LICENSE">
-    <img src="https://img.shields.io/npm/l/ootp.svg" alt="License">
+  <a href="https://github.com/qq15725/totpkit/blob/main/LICENSE">
+    <img src="https://img.shields.io/npm/l/totpkit.svg" alt="License">
   </a>
 </p>
 
 ## 📦 Install
 
 ```shell
-npm i -g ootp
+npm i -g totpkit
 ```
 
 ## 🦄 Usage
 
 ```shell
-ootp "you-key"
+totpkit "you-key"
 ```

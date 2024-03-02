@@ -1,21 +1,21 @@
 {
-  "name": "ootp",
+  "name": "totpkit",
   "type": "module",
   "version": "0.0.0",
   "packageManager": "pnpm@7.9.0",
-  "description": "Starter template for TypeScript command line interface library",
+  "description": "TOTP (Time-based One-time Password)",
   "author": "wxm",
   "license": "MIT",
-  "homepage": "https://github.com/qq15725/ootp",
+  "homepage": "https://github.com/qq15725/totpkit",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qq15725/ootp.git"
+    "url": "git+https://github.com/qq15725/totpkit.git"
   },
   "engines": {
     "node": ">=14.18.1"
   },
   "bugs": {
-    "url": "https://github.com/qq15725/ootp/issues"
+    "url": "https://github.com/qq15725/totpkit/issues"
   },
   "keywords": [],
   "exports": {
@@ -28,7 +28,7 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "bin": {
-    "ootp": "./bin/index.mjs"
+    "totpkit": "./bin/index.mjs"
   },
   "files": [
     "bin",
