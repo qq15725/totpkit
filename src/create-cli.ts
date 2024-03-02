@@ -4,44 +4,26 @@ import consola from 'consola'
 import { bin, version } from '../package.json'
 import type { Options } from './types'
 
-const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
+function base32Decode(base32String: string) {
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
+  const padding = '='
 
-function base32ToBuf(str: string) {
-  let end = str.length
-  while (str[end - 1] === '=') --end
-  const cstr = (end < str.length ? str.substring(0, end) : str).toUpperCase()
+  let bits = ''
+  let result = ''
 
-  const buf = new ArrayBuffer(((cstr.length * 5) / 8) | 0)
-  const arr = new Uint8Array(buf)
-  let bits = 0
-  let value = 0
-  let index = 0
+  base32String = base32String.replace(new RegExp(padding, 'g'), '')
 
-  for (let i = 0; i < cstr.length; i++) {
-    const idx = ALPHABET.indexOf(cstr[i])
-    if (idx === -1) throw new TypeError(`Invalid character found: ${ cstr[i] }`)
-    value = (value << 5) | idx
-    bits += 5
-    if (bits >= 8) {
-      bits -= 8
-      arr[index++] = value >>> bits
-    }
+  for (let i = 0; i < base32String.length; i++) {
+    const value = alphabet.indexOf(base32String[i].toUpperCase())
+    bits += value.toString(2).padStart(5, '0')
   }
 
-  return arr
-}
-
-function uintToBuf(num: number) {
-  const buf = new ArrayBuffer(8)
-  const arr = new Uint8Array(buf)
-  let acc = num
-  for (let i = 7; i >= 0; i--) {
-    if (acc === 0) break
-    arr[i] = acc & 255
-    acc -= arr[i]
-    acc /= 256
+  for (let i = 0; i + 8 <= bits.length; i += 8) {
+    const bytes = bits.substring(i, i + 8)
+    result += String.fromCharCode(parseInt(bytes, 2))
   }
-  return arr
+
+  return Buffer.from(result, 'binary')
 }
 
 export function createCli(_options: Options) {
@@ -56,23 +38,28 @@ export function createCli(_options: Options) {
         period = 30,
         timestamp = Date.now(),
       } = commandOptions
-      const counter = Math.floor(timestamp / 1000 / period)
 
-      const key = base32ToBuf(secret)
-      const message = uintToBuf(counter)
-      const hmac = crypto.createHmac(algorithm, key)
-      hmac.update(message)
-      const digest = new Uint8Array(hmac.digest().buffer)
+      let time = Math.floor(timestamp / 1000 / period)
 
-      const offset = digest[digest.byteLength - 1] & 15
-      const otp = (
-        ((digest[offset] & 127) << 24)
-        | ((digest[offset + 1] & 255) << 16)
-        | ((digest[offset + 3] & 255) << 8)
-        | (digest[offset + 3] & 255)
-      ) % 10 ** digits
+      const data = Buffer.alloc(8)
+      for (let i = 0; i < 8; i++) {
+        data[7 - i] = time & 0xFF
+        time >>= 8
+      }
 
-      consola.log(String(otp).padStart(digits, '0'))
+      const hmac = crypto.createHmac(algorithm, base32Decode(secret))
+      hmac.update(data)
+      const hash = hmac.digest()
+
+      const offset = hash[hash.length - 1] & 0xF
+      const binCode = (hash[offset] & 0x7F) << 24
+        | (hash[offset + 1] & 0xFF) << 16
+        | (hash[offset + 2] & 0xFF) << 8
+        | (hash[offset + 3] & 0xFF)
+
+      const otp = binCode % 1000000
+
+      consola.success(`ToTP code: ${ otp.toString().padStart(digits, '0') }`)
     })
 
   cli
